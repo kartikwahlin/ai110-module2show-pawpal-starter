@@ -2,40 +2,50 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class Profile:
-    owner_name: str
-    pet_name: str
+class Task:
+    name: str
+    duration: int
+    priority: int
 
 
 @dataclass
-class Task:
+class Pet:
     name: str
-    duration: int   # minutes
-    priority: int   # lower number = higher priority
+    tasks: list[Task] = field(default_factory=list)
 
 
-class TaskList:
-    def __init__(self):
-        self.tasks: list[Task] = []
+class Owner:
+    def __init__(self, name: str, day_start: int, day_end: int):
+        self.name = name
+        self.day_start = day_start  # hour in 24h format, e.g. 8 = 8:00am
+        self.day_end = day_end      # hour in 24h format, e.g. 22 = 10:00pm
+        self.pets: list[Pet] = []
 
-    def add_task(self, task: Task) -> None:
-        pass
+    def add_pet(self, pet: Pet) -> None:
+        self.pets.append(pet)
 
-    def remove_task(self, name: str) -> None:
-        pass
+    def remove_pet(self, pet: Pet) -> None:
+        self.pets.remove(pet)
 
-    def get_tasks(self) -> list[Task]:
-        pass
+    def get_all_tasks(self) -> list[tuple[str, Task]]:
+        return [(pet.name, task) for pet in self.pets for task in pet.tasks]
 
 
 class Scheduler:
-    def __init__(self, task_list: TaskList, profile: Profile, time_budget: int):
-        self.task_list = task_list
-        self.profile = profile
-        self.time_budget = time_budget  # minutes available in the day
+    def __init__(self, owner: Owner):
+        self.owner = owner
 
-    def generate_plan(self) -> list[Task]:
-        pass
+    def get_tasks(self) -> list[tuple[str, Task]]:
+        return self.owner.get_all_tasks()
 
-    def explain_plan(self) -> str:
-        pass
+    def organize_tasks(self) -> list[tuple[str, Task]]:
+        tasks = self.get_tasks()
+        return sorted(tasks, key=lambda t: t[1].priority)
+
+    def generate_times(self) -> list[tuple[str, str, int]]:
+        schedule = []
+        current_time = self.owner.day_start * 60
+        for pet_name, task in self.organize_tasks():
+            schedule.append((pet_name, task.name, current_time))
+            current_time += task.duration
+        return schedule

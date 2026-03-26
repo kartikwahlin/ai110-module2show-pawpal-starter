@@ -1,29 +1,32 @@
 classDiagram
-    class Profile {
-        +str owner_name
-        +str pet_name
-    }
-
     class Task {
         +str name
         +int duration
         +int priority
     }
 
-    class TaskList {
+    class Pet {
+        +str name
         +list~Task~ tasks
-        +add_task(task: Task)
-        +remove_task(name: str)
-        +get_tasks() list~Task~
+    }
+
+    class Owner {
+        +str name
+        +int day_start
+        +int day_end
+        +list~Pet~ pets
+        +add_pet(pet: Pet)
+        +remove_pet(pet: Pet)
+        +get_all_tasks() list~Task~
     }
 
     class Scheduler {
-        +TaskList task_list
-        +int time_budget
-        +generate_plan() list~Task~
-        +explain_plan() str
+        +Owner owner
+        +get_tasks() list~Task~
+        +organize_tasks() list~Task~
+        +generate_times() list~tuple~
     }
 
-    TaskList "1" --> "0..*" Task : contains
-    Scheduler "1" --> "1" TaskList : uses
-    Scheduler "1" --> "1" Profile : references
+    Pet "1" --> "0..*" Task : has
+    Owner "1" --> "1..*" Pet : manages
+    Scheduler "1" --> "1" Owner : uses
