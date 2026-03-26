@@ -3,18 +3,17 @@
 ## 1. System Design
 
 **a. Initial design**
- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+
 
 3 core actions: Change profile data,
 Add task, giving prio and duration. Name and description possible too
 View plan
 - Briefly describe your initial UML design.
+    I made a profile, task, taskList and scheduler class.
+    The first two are records. TaskList is a collectionf of Tasks.
+    scheduler is a higher-level function that can generate visible schedules using profile information and tasks
 - What classes did you include, and what responsibilities did you assign to each?
-
+    I included the aforementioned classes. Most of the responsibility lies in the scheduler class. I wanted to keep things simple at the lower level, after claude mentioned that it was best to have modular, seperate classes. Initially, I wanted to have task as an internal structure in taskList, which would've made modification more difficult later.
 **b. Design changes**
 
 - Did your design change during implementation?
