@@ -1,0 +1,29 @@
+classDiagram
+    class Profile {
+        +str owner_name
+        +str pet_name
+    }
+
+    class Task {
+        +str name
+        +int duration
+        +int priority
+    }
+
+    class TaskList {
+        +list~Task~ tasks
+        +add_task(task: Task)
+        +remove_task(name: str)
+        +get_tasks() list~Task~
+    }
+
+    class Scheduler {
+        +TaskList task_list
+        +int time_budget
+        +generate_plan() list~Task~
+        +explain_plan() str
+    }
+
+    TaskList "1" --> "0..*" Task : contains
+    Scheduler "1" --> "1" TaskList : uses
+    Scheduler "1" --> "1" Profile : references

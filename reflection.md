@@ -3,7 +3,15 @@
 ## 1. System Design
 
 **a. Initial design**
+ Let a user enter basic owner + pet info
+- Let a user add/edit tasks (duration + priority at minimum)
+- Generate a daily schedule/plan based on constraints and priorities
+- Display the plan clearly (and ideally explain the reasoning)
+- Include tests for the most important scheduling behaviors
 
+3 core actions: Change profile data,
+Add task, giving prio and duration. Name and description possible too
+View plan
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
