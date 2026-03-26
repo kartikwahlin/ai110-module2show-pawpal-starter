@@ -17,7 +17,9 @@ View plan
 **b. Design changes**
 
 - Did your design change during implementation?
+Yes.
 - If yes, describe at least one change and why you made it.
+I had to change from taskList to Pet. Renaming this class allowed me to have multiple pets tracked in one instance
 
 ---
 
