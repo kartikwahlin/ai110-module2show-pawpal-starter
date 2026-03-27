@@ -28,13 +28,16 @@ I had to change from taskList to Pet. Renaming this class allowed me to have mul
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+It's most worried about time conflicts. Initially, my program would put all of the tasks in order from highest to lowest priority, but the section about time conflicts made me realize the user was supposed to input the start time for each task.
 - How did you decide which constraints mattered most?
+I looked at the assignment and tried to figure out what would match, and be practical in real life.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+It wants to use a helper function for two lambda sort functions
 - Why is that tradeoff reasonable for this scenario?
-
+It would help avoid repeating code, but at this scale, it's not that valuable.
 ---
 
 ## 3. AI Collaboration

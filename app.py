@@ -76,12 +76,13 @@ if "owner" in st.session_state and st.session_state.owner.pets:
     with st.form("task_form"):
         pet_choice = st.selectbox("Assign to pet", [p.name for p in owner.pets])
         task_name = st.text_input("Task name")
+        task_time = st.text_input("Time (HH:MM)", value="08:00")
         duration = st.number_input("Duration (minutes)", min_value=1, max_value=240, value=20)
         priority = st.number_input("Priority (lower = higher priority)", min_value=1, value=1)
         submitted = st.form_submit_button("Add Task")
         if submitted and task_name:
             pet = next(p for p in owner.pets if p.name == pet_choice)
-            pet.tasks.append(Task(task_name, int(duration), int(priority)))
+            pet.tasks.append(Task(task_name, int(duration), int(priority), time=task_time))
             st.rerun()
 
     for pet in owner.pets:
@@ -98,13 +99,11 @@ st.subheader("Build Schedule")
 if "owner" in st.session_state and st.session_state.owner.pets:
     if st.button("Generate schedule"):
         scheduler = Scheduler(st.session_state.owner)
-        schedule = scheduler.generate_times()
+        schedule = scheduler.sort_by_time(scheduler.get_tasks())
         if schedule:
             st.write("### Today's Schedule")
-            for pet_name, task_name, start_minute in schedule:
-                hours = start_minute // 60
-                minutes = start_minute % 60
-                st.write(f"`{hours:02d}:{minutes:02d}` — **{task_name}** ({pet_name})")
+            for pet_name, task in schedule:
+                st.write(f"`{task.time}` — **{task.name}** ({pet_name})")
         else:
             st.info("No tasks to schedule.")
 else:

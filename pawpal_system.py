@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import date, timedelta
 
 
 @dataclass
@@ -6,6 +7,9 @@ class Task:
     name: str
     duration: int
     priority: int
+    time: str = "08:00"
+    frequency: str = "daily"
+    due_date: date = field(default_factory=date.today)
     completed: bool = False
 
     def mark_complete(self) -> None:
@@ -43,6 +47,41 @@ class Scheduler:
     def __init__(self, owner: Owner):
         self.owner = owner
 
+    def mark_task_complete(self, pet_name: str, task: Task) -> None:
+        """Mark a task complete and schedule the next occurrence if it is recurring."""
+        task.mark_complete()
+        delta = {"daily": timedelta(days=1), "weekly": timedelta(weeks=1)}.get(task.frequency)
+        if delta:
+            pet = next(p for p in self.owner.pets if p.name == pet_name)
+            pet.tasks.append(Task(
+                name=task.name,
+                duration=task.duration,
+                priority=task.priority,
+                time=task.time,
+                frequency=task.frequency,
+                due_date=task.due_date + delta,
+            ))
+
+    def detect_conflicts(self) -> list[str]:
+        """Return a list of warning messages for tasks scheduled at the same time."""
+        seen = {}
+        warnings = []
+        for pet_name, task in self.get_tasks():
+            key = (pet_name, task.time)
+            if key in seen:
+                warnings.append(f"Conflict: [{pet_name}] has two tasks at {task.time} — '{seen[key]}' and '{task.name}'")
+            else:
+                seen[key] = task.name
+        return warnings
+
+    def filter_tasks_completion(self, completed: bool) -> list[tuple[str, Task]]:
+        """Return tasks filtered by completion status."""
+        return [(pet_name, task) for pet_name, task in self.get_tasks() if task.completed == completed]
+
+    def filter_tasks_by_pet(self, pet_name: str) -> list[tuple[str, Task]]:
+        """Return tasks belonging to a specific pet."""
+        return [(pname, task) for pname, task in self.get_tasks() if pname == pet_name]
+
     def get_tasks(self) -> list[tuple[str, Task]]:
         """Retrieve all tasks from the owner's pets."""
         return self.owner.get_all_tasks()
@@ -52,11 +91,9 @@ class Scheduler:
         tasks = self.get_tasks()
         return sorted(tasks, key=lambda t: t[1].priority)
 
-    def generate_times(self) -> list[tuple[str, str, int]]:
-        """Assign start times to tasks in priority order, returning (pet_name, task_name, start_minute) tuples."""
-        schedule = []
-        current_time = self.owner.day_start * 60
-        for pet_name, task in self.organize_tasks():
-            schedule.append((pet_name, task.name, current_time))
-            current_time += task.duration
-        return schedule
+    def sort_by_time(self, tasks: list[tuple[str, Task]]) -> list[tuple[str, Task]]:
+        """Return tasks sorted by their time attribute in HH:MM ascending order, printing any conflicts."""
+        for warning in self.detect_conflicts():
+            print(warning)
+        return sorted(tasks, key=lambda entry: entry[1].time)
+

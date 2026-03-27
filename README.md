@@ -22,6 +22,9 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling
+- Warns user about potential task conflicts
+- Automatically refreshes daily and weekly tasks.
 ## Getting started
 
 ### Setup
