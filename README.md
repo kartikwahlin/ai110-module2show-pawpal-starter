@@ -2,6 +2,16 @@
 
 You are building **PawPal+**, a Streamlit app that helps a pet owner plan care tasks for their pet.
 
+## Features
+
+- **Multi-pet management** — one owner can manage any number of pets, each with their own task list
+- **Priority-based sorting** — tasks are ranked by priority so the most important care happens first
+- **Time-based sorting** — tasks can be sorted chronologically by their user-set HH:MM time
+- **Conflict detection** — the scheduler warns when two tasks for the same pet are scheduled at the same time
+- **Recurring tasks** — daily and weekly tasks automatically reschedule themselves when marked complete, using Python's `timedelta`
+- **Flexible filtering** — tasks can be filtered by completion status or by pet name
+- **Streamlit UI** — owner, pet, and task data persists across reruns using `st.session_state`
+
 ## Scenario
 
 A busy pet owner needs help staying consistent with pet care. They want an assistant that can:

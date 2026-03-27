@@ -3,6 +3,11 @@ classDiagram
         +str name
         +int duration
         +int priority
+        +str time
+        +str frequency
+        +date due_date
+        +bool completed
+        +mark_complete()
     }
 
     class Pet {
@@ -17,14 +22,18 @@ classDiagram
         +list~Pet~ pets
         +add_pet(pet: Pet)
         +remove_pet(pet: Pet)
-        +get_all_tasks() list~Task~
+        +get_all_tasks() list~tuple~
     }
 
     class Scheduler {
         +Owner owner
-        +get_tasks() list~Task~
-        +organize_tasks() list~Task~
-        +generate_times() list~tuple~
+        +mark_task_complete(pet_name: str, task: Task)
+        +detect_conflicts() list~str~
+        +filter_tasks_completion(completed: bool) list~tuple~
+        +filter_tasks_by_pet(pet_name: str) list~tuple~
+        +get_tasks() list~tuple~
+        +organize_tasks() list~tuple~
+        +sort_by_time(tasks: list) list~tuple~
     }
 
     Pet "1" --> "0..*" Task : has

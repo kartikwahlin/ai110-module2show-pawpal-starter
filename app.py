@@ -88,7 +88,8 @@ if "owner" in st.session_state and st.session_state.owner.pets:
     for pet in owner.pets:
         if pet.tasks:
             st.write(f"**{pet.name}**")
-            st.table([{"task": t.name, "duration": t.duration, "priority": t.priority} for t in pet.tasks])
+            sorted_tasks = sorted(pet.tasks, key=lambda t: t.priority)
+            st.table([{"task": t.name, "time": t.time, "duration": t.duration, "priority": t.priority} for t in sorted_tasks])
 else:
     st.info("Add an owner and at least one pet first.")
 
@@ -99,11 +100,16 @@ st.subheader("Build Schedule")
 if "owner" in st.session_state and st.session_state.owner.pets:
     if st.button("Generate schedule"):
         scheduler = Scheduler(st.session_state.owner)
+
+        conflicts = scheduler.detect_conflicts()
+        for msg in conflicts:
+            st.warning(msg)
+
         schedule = scheduler.sort_by_time(scheduler.get_tasks())
         if schedule:
             st.write("### Today's Schedule")
             for pet_name, task in schedule:
-                st.write(f"`{task.time}` — **{task.name}** ({pet_name})")
+                st.write(f"`{task.time}` — **{task.name}** ({pet_name}, {task.duration} min)")
         else:
             st.info("No tasks to schedule.")
 else:
