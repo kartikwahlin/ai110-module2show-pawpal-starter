@@ -25,6 +25,12 @@ Your final app should:
 ## Smarter Scheduling
 - Warns user about potential task conflicts
 - Automatically refreshes daily and weekly tasks.
+
+## Testing PawPal+
+python -m pytest
+My tests check to make sure that recurring tasks work properly, repeat conflicts are caught and flagged for the user, and sort/filter methods return properly modified lists of tasks.
+
+Confidence level: 5
 ## Getting started
 
 ### Setup
