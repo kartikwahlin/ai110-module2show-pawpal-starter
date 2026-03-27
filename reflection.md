@@ -45,12 +45,17 @@ It would help avoid repeating code, but at this scale, it's not that valuable.
 **a. How you used AI**
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
+Ai was useful throughout the whole process, but I thought claude was most effective when I had to adjust my structure after finding out it was meant to be different in the assignment. It's quick at changing functions, and adjusting their usage in other parts of the code.
+It was also powerful as a tool for generating documentation that would otherwise take a while to write.
 - What kinds of prompts or questions were most helpful?
+My strongest prompts involved me giving context, providing a suggestion, and asking for other ideas. Claude would then list out a variety of options, making it easy to determine the best one, and making sure I can trust the changes I then ask it to make.
 
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
+Claude wanted to refactor two functions to both rely on a helper. Since both functions were 1 line long anyways, due to using lambda, I thought it would just make the code harder to read.
 - How did you evaluate or verify what the AI suggested?
+I considered the output in both scenarios, and since it was a simple refactoring, I just needed to think about what would be easiest to read and potentially change.
 
 ---
 
@@ -59,12 +64,16 @@ It would help avoid repeating code, but at this scale, it's not that valuable.
 **a. What you tested**
 
 - What behaviors did you test?
+I tested sorting, conflict detection, and filtering behaviours.
 - Why were these tests important?
+Without these tests, I'd have to hand-construct different scenarios in the app to make sure these edge cases worked. With them, I don't have to spend so much time to know my code works
 
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
+5/5
 - What edge cases would you test next if you had more time?
+I think I would try testing much larger task lists, and ones involving overlapping daily tasks that don't conflict at the time of assignment.
 
 ---
 
@@ -73,11 +82,14 @@ It would help avoid repeating code, but at this scale, it's not that valuable.
 **a. What went well**
 
 - What part of this project are you most satisfied with?
+I really liked creating the UML diagram, and coming up with a modular and scalable skeleton that was easy to change later on.
 
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
+I would probably want to make it easier to delete pets and tasks.
 
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+AI is powerful, and has tons of programming experience, but needs guidance. It'll follow bad decisions, so you need to make sure your prompts point it in the right direction.
