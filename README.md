@@ -12,6 +12,9 @@ You are building **PawPal+**, a Streamlit app that helps a pet owner plan care t
 - **Flexible filtering** — tasks can be filtered by completion status or by pet name
 - **Streamlit UI** — owner, pet, and task data persists across reruns using `st.session_state`
 
+<a href="/screen1.png" target="_blank"><img src='/screen1.png' title='PawPal App 1/2' width='' alt='PawPal App 1/2' class='center-block' /></a>
+<a href="/screen2.png" target="_blank"><img src='/screen2.png' title='PawPal App 2/2' width='' alt='PawPal App 2/2' class='center-block' /></a>
+
 ## Scenario
 
 A busy pet owner needs help staying consistent with pet care. They want an assistant that can:
